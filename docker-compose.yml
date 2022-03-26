@@ -1,0 +1,19 @@
+version: '3'
+services:
+  proxy:
+    build: ./
+    ports:
+      - "11211:11211"
+    links:
+      - memcached
+    depends_on:
+      - memcached
+    environment:
+      - FAKE_HOST=0.0.0.0
+      - FAKE_PROXY_MEMCACHED_HOST=memcached
+      - FAKE_PROXY_MEMCACHED_PORT=11211
+      - FAKE_TRACE=true
+  memcached:
+    image: memcached
+    expose:
+      - "11211"
